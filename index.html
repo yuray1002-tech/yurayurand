@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>プリキュア色配置研究ツール</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<title>色配置認識研究ツール</title>
 <style>
 * {
   margin: 0;
@@ -14,12 +13,12 @@
 
 body {
   font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
-  background: linear-gradient(135deg, #ffeef8 0%, #e8d5ff 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
 }
 
 .container {
-  max-width: 800px;
+  max-width: 600px;
   margin: 0 auto;
   background: white;
   min-height: 100vh;
@@ -50,7 +49,7 @@ body {
 .menu-line {
   width: 25px;
   height: 3px;
-  background: #ff69b4;
+  background: #667eea;
   border-radius: 2px;
 }
 
@@ -85,7 +84,7 @@ body {
 
 .menu-item {
   padding: 20px;
-  background: linear-gradient(135deg, #ff69b4, #ff1493);
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
   border: none;
   border-radius: 15px;
@@ -94,10 +93,10 @@ body {
   cursor: pointer;
   width: 100%;
   margin-bottom: 15px;
-  box-shadow: 0 4px 10px rgba(255,105,180,0.3);
+  box-shadow: 0 4px 10px rgba(102,126,234,0.3);
 }
 
-/* ホーム画面 */
+/* 画面共通 */
 .screen {
   display: none;
   min-height: 100vh;
@@ -109,6 +108,7 @@ body {
   flex-direction: column;
 }
 
+/* ホーム画面 */
 .home-screen {
   justify-content: center;
   align-items: center;
@@ -116,9 +116,9 @@ body {
 }
 
 .logo {
-  font-size: 36px;
+  font-size: 32px;
   font-weight: 900;
-  background: linear-gradient(135deg, #ff69b4, #ff1493);
+  background: linear-gradient(135deg, #667eea, #764ba2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 10px;
@@ -126,12 +126,13 @@ body {
 
 .subtitle {
   font-size: 14px;
-  color: #999;
+  color: #666;
   margin-bottom: 60px;
+  line-height: 1.6;
 }
 
 .start-button {
-  background: linear-gradient(135deg, #ff69b4, #ff1493);
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
   border: none;
   padding: 20px 60px;
@@ -139,20 +140,18 @@ body {
   font-weight: 700;
   border-radius: 50px;
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(255,105,180,0.4);
+  box-shadow: 0 10px 30px rgba(102,126,234,0.4);
 }
 
 /* 情報入力画面 */
 .info-form {
   padding-top: 40px;
-  max-width: 500px;
-  margin: 0 auto;
 }
 
 .form-title {
   font-size: 24px;
   font-weight: 700;
-  color: #ff69b4;
+  color: #667eea;
   text-align: center;
   margin-bottom: 40px;
 }
@@ -172,18 +171,62 @@ body {
 .form-input {
   width: 100%;
   padding: 15px;
-  border: 2px solid #ffc0cb;
+  border: 2px solid #e0e0ff;
   border-radius: 15px;
   font-size: 16px;
 }
 
 .form-input:focus {
   outline: none;
-  border-color: #ff69b4;
+  border-color: #667eea;
+}
+
+.checkbox-group {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: #f5f5ff;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.checkbox-item.selected {
+  background: #e6e6ff;
+  border-color: #667eea;
+}
+
+.checkbox-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.checkbox-label {
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  flex: 1;
+}
+
+.selected-count {
+  font-size: 12px;
+  color: #667eea;
+  margin-top: 10px;
+  text-align: right;
 }
 
 .next-button {
-  background: linear-gradient(135deg, #ff69b4, #ff1493);
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
   border: none;
   padding: 15px 40px;
@@ -195,52 +238,51 @@ body {
   margin-top: 20px;
 }
 
+.next-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* 実験画面 */
 .experiment-title {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
-  color: #ff69b4;
+  color: #667eea;
   text-align: center;
   margin-bottom: 30px;
   line-height: 1.6;
   padding: 20px;
-  background: #fff0f5;
+  background: #f5f5ff;
   border-radius: 15px;
 }
 
-.test-count-badge {
-  display: inline-block;
-  background: #ff1493;
-  color: white;
-  padding: 5px 15px;
-  border-radius: 20px;
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.emphasis-left {
-  color: #e6005c;
-  font-size: 1.3em;
-  font-weight: 900;
-  background: linear-gradient(transparent 60%, #ffb6c1 60%);
-  padding: 0 8px;
-  margin: 0 5px;
-  display: inline-block;
-}
-
-.arrow-indicator {
+.count-selection {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 15px;
-  color: #ff69b4;
-  font-weight: bold;
-  font-size: 14px;
-  margin-top: 15px;
-  background: white;
-  padding: 10px;
+  gap: 20px;
+  margin: 40px 0;
+}
+
+.count-option {
+  width: 80px;
+  height: 80px;
+  border: 3px solid #667eea;
   border-radius: 20px;
-  border: 2px dashed #ffc0cb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: 900;
+  color: #667eea;
+  cursor: pointer;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.count-option:hover {
+  background: #667eea;
+  color: white;
+  transform: scale(1.05);
 }
 
 .circles-container {
@@ -250,12 +292,12 @@ body {
   gap: 15px;
   flex-wrap: wrap;
   margin: 40px 0;
-  min-height: 120px;
+  min-height: 200px;
 }
 
 .circle {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   border: 4px solid #333;
   border-radius: 50%;
   display: flex;
@@ -273,9 +315,14 @@ body {
   font-weight: 700;
 }
 
-/* カラーピッカー（明度対応で高さを拡張） */
+.circle.drag-over {
+  border-color: #667eea;
+  transform: scale(1.1);
+}
+
+/* カラーピッカー */
 .color-picker-container {
-  margin-top: 20px;
+  margin-top: 40px;
   padding: 20px;
   background: #f9f9f9;
   border-radius: 15px;
@@ -286,39 +333,32 @@ body {
   font-weight: 700;
   color: #666;
   text-align: center;
-  margin-bottom: 5px;
-}
-
-.color-picker-subtext {
-  font-size: 11px;
-  color: #999;
-  text-align: center;
   margin-bottom: 15px;
 }
 
 .gradient-bar {
   width: 100%;
-  height: 180px; /* 高さを広げて2Dピッカーにする */
-  background: 
-    linear-gradient(to bottom, #ffffff 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0) 50%, #000000 100%),
-    linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3, #ff0000);
+  height: 80px;
+  background: linear-gradient(to right, 
+    #ff0000, #ff7f00, #ffff00, #00ff00, 
+    #0000ff, #4b0082, #9400d3, #ff0000);
   border-radius: 10px;
-  cursor: crosshair;
+  cursor: pointer;
   position: relative;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .selected-color-display {
   margin-top: 15px;
-  padding: 15px;
+  padding: 20px;
   background: white;
   border-radius: 10px;
   text-align: center;
 }
 
 .selected-color-box {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   margin: 0 auto 10px;
   border: 3px solid #ddd;
@@ -361,7 +401,7 @@ body {
 .thank-you-text {
   font-size: 28px;
   font-weight: 700;
-  color: #ff69b4;
+  color: #667eea;
   margin-bottom: 20px;
 }
 
@@ -377,7 +417,7 @@ body {
 
 .record-item {
   background: white;
-  border: 2px solid #ffc0cb;
+  border: 2px solid #e0e0ff;
   border-radius: 15px;
   padding: 20px;
   margin-bottom: 20px;
@@ -393,36 +433,34 @@ body {
 
 .record-colors {
   display: flex;
-  gap: 5px;
+  gap: 10px;
   justify-content: center;
-  margin-top: 5px;
+  margin-top: 15px;
 }
 
 .record-color {
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
 .record-experiment-label {
   font-size: 12px;
   font-weight: 700;
-  color: #ff69b4;
-  margin-top: 15px;
+  color: #667eea;
+  margin-top: 10px;
   text-align: center;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 5px;
 }
 
-.record-sub-label {
-  font-size: 11px;
-  color: #666;
-  text-align: center;
-  margin-top: 5px;
+.record-groups {
+  font-size: 12px;
+  color: #888;
+  margin-top: 10px;
+  line-height: 1.6;
 }
 
-/* 分析画面（縦積み・スクロール特化） */
+/* 分析画面 */
 .analysis-screen {
   padding-top: 60px;
 }
@@ -437,17 +475,17 @@ body {
 .analysis-tab {
   padding: 10px 20px;
   background: white;
-  border: 2px solid #ffc0cb;
+  border: 2px solid #e0e0ff;
   border-radius: 20px;
   font-size: 14px;
   font-weight: 700;
-  color: #ff69b4;
+  color: #667eea;
   cursor: pointer;
   white-space: nowrap;
 }
 
 .analysis-tab.active {
-  background: #ff69b4;
+  background: #667eea;
   color: white;
 }
 
@@ -455,46 +493,25 @@ body {
   background: white;
   border-radius: 15px;
   padding: 20px;
-  margin-bottom: 30px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-
-.analysis-title {
-  font-size: 20px;
-  font-weight: 900;
-  color: #ff1493;
-  margin-bottom: 15px;
-  text-align: center;
-  border-bottom: 2px dashed #ffc0cb;
-  padding-bottom: 10px;
-}
-
-.chart-subtitle {
-  font-size: 16px;
-  font-weight: 700;
-  color: #333;
-  margin-top: 30px;
-  margin-bottom: 10px;
-  padding-left: 10px;
-  border-left: 4px solid #ff69b4;
-}
-
-/* ★ 横並びを強制せず、常に縦並び（スクロール）にする */
-.chart-row {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
   margin-bottom: 20px;
 }
 
-.chart-wrapper {
+.analysis-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 15px;
+}
+
+.chart-container {
   width: 100%;
-  background: #fdfdfd;
-  border: 1px solid #eee;
+  height: 300px;
+  background: #f9f9f9;
   border-radius: 10px;
-  padding: 10px;
-  height: 300px; /* 高さを固定することでグラフのはみ出しを防ぐ */
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
 }
 
 .no-data {
@@ -502,31 +519,51 @@ body {
   text-align: center;
   padding: 40px;
 }
+
+.home-button {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  display: block;
+}
 </style>
 </head>
 <body>
 
 <div class="container">
+  <!-- メニューボタン -->
   <button class="menu-button" onclick="toggleMenu()">
     <div class="menu-line"></div>
     <div class="menu-line"></div>
     <div class="menu-line"></div>
   </button>
 
+  <!-- メニューオーバーレイ -->
   <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
 
+  <!-- メニューパネル -->
   <div class="menu-panel" id="menuPanel">
     <button class="menu-item" onclick="goToHome()">🏠 ホームに戻る</button>
     <button class="menu-item" onclick="goToRecords()">📝 記録を見る</button>
     <button class="menu-item" onclick="goToAnalysis()">📊 分析する</button>
   </div>
 
+  <!-- ホーム画面 -->
   <div class="screen home-screen active" id="homeScreen">
-    <h1 class="logo">🌸 プリキュア色配置研究</h1>
-    <p class="subtitle">色の配置パターンを調査します</p>
+    <h1 class="logo">🎨 色配置認識研究</h1>
+    <p class="subtitle">幼少期の視聴経験が<br>色配置の認識に与える影響を調査します</p>
     <button class="start-button" onclick="startExperiment()">スタート</button>
   </div>
 
+  <!-- 年齢入力画面 -->
   <div class="screen info-screen" id="infoScreen">
     <div class="info-form">
       <h2 class="form-title">基本情報を入力してください</h2>
@@ -537,32 +574,53 @@ body {
       </div>
 
       <div class="form-group">
-        <label class="form-label">見ていたプリキュアシリーズ</label>
-        <input type="text" class="form-input" id="seriesInput" placeholder="例：ふたりはプリキュア">
+        <label class="form-label">性別</label>
+        <select class="form-input" id="genderInput">
+          <option value="">選択してください</option>
+          <option value="男性">男性</option>
+          <option value="女性">女性</option>
+          <option value="その他">その他</option>
+          <option value="答えたくない">答えたくない</option>
+        </select>
       </div>
 
-      <button class="next-button" onclick="goToExperiment1()">次へ</button>
+      <button class="next-button" onclick="goToGroupSelection()">次へ</button>
     </div>
   </div>
 
-  <div class="screen experiment1-color-screen" id="exp1ColorScreen">
-    <h2 class="experiment-title">
-      <span class="test-count-badge" id="exp1Badge">【3人の場合】</span><br>
-      実験１<br>
-      グループの中で印象が高い色を<br>
-      <span class="emphasis-left">⬅️ 左から順に</span>配置してください
-      <div class="arrow-indicator">
-        <span>印象 高</span>
-        <span>➔</span>
-        <span>➔</span>
-        <span>印象 低</span>
+  <!-- 色分け集団選択画面 -->
+  <div class="screen group-selection-screen" id="groupSelectionScreen">
+    <div class="info-form">
+      <h2 class="form-title">幼少期（3-12歳）に馴染みのあった<br>色分け集団を3つまで選択してください</h2>
+      
+      <div class="form-group">
+        <div class="checkbox-group" id="groupCheckboxes">
+          <!-- JavaScript で動的生成 -->
+        </div>
+        <div class="selected-count" id="selectedCount">選択数: 0 / 3</div>
       </div>
-    </h2>
+
+      <button class="next-button" id="groupNextButton" onclick="goToExperiment1()" disabled>次へ</button>
+    </div>
+  </div>
+
+  <!-- 実験1: 数選択画面 -->
+  <div class="screen experiment1-count-screen" id="exp1CountScreen">
+    <h2 class="experiment-title">実験１<br>色分け集団において<br>印象の強い色のイメージを並べよう</h2>
+    <div class="count-selection">
+      <div class="count-option" onclick="selectCount1(3)">3</div>
+      <div class="count-option" onclick="selectCount1(4)">4</div>
+      <div class="count-option" onclick="selectCount1(5)">5</div>
+    </div>
+  </div>
+
+  <!-- 実験1: 色配置画面 -->
+  <div class="screen experiment1-color-screen" id="exp1ColorScreen">
+    <h2 class="experiment-title">色を選んで配置してください</h2>
     <div class="circles-container" id="exp1Circles"></div>
     
     <div class="color-picker-container">
-      <div class="color-picker-label">下のエリアから色を選んでください</div>
-      <div class="color-picker-subtext">左右で色相（色味）、上下で明度（上:白、中:鮮やか、下:黒）</div>
+      <div class="color-picker-label">下のバーから色を選んでください</div>
       <div class="gradient-bar" id="gradientBar1"></div>
       <div class="selected-color-display">
         <div class="selected-color-box" id="selectedColor1"></div>
@@ -573,18 +631,23 @@ body {
     <button class="complete-button" id="complete1" onclick="completeExperiment1()">完了</button>
   </div>
 
+  <!-- 実験2: 数選択画面 -->
+  <div class="screen experiment2-count-screen" id="exp2CountScreen">
+    <h2 class="experiment-title">実験２<br>色分け集団において<br>横並びにしたときにどの色がどの位置に来るかを示しなさい</h2>
+    <div class="count-selection">
+      <div class="count-option" onclick="selectCount2(3)">3</div>
+      <div class="count-option" onclick="selectCount2(4)">4</div>
+      <div class="count-option" onclick="selectCount2(5)">5</div>
+    </div>
+  </div>
+
+  <!-- 実験2: 色配置画面 -->
   <div class="screen experiment2-color-screen" id="exp2ColorScreen">
-    <h2 class="experiment-title">
-      <span class="test-count-badge" id="exp2Badge">【3人の場合】</span><br>
-      実験２<br>
-      横並びにしたときにどの色が<br>
-      どの位置に来るか配置してください
-    </h2>
+    <h2 class="experiment-title">横並びの順序で色を配置してください</h2>
     <div class="circles-container" id="exp2Circles"></div>
     
     <div class="color-picker-container">
-      <div class="color-picker-label">下のエリアから色を選んでください</div>
-      <div class="color-picker-subtext">左右で色相（色味）、上下で明度（上:白、中:鮮やか、下:黒）</div>
+      <div class="color-picker-label">下のバーから色を選んでください</div>
       <div class="gradient-bar" id="gradientBar2"></div>
       <div class="selected-color-display">
         <div class="selected-color-box" id="selectedColor2"></div>
@@ -595,108 +658,98 @@ body {
     <button class="complete-button" id="complete2" onclick="completeExperiment2()">完了</button>
   </div>
 
+  <!-- 完了画面 -->
   <div class="screen thank-you" id="thankYouScreen">
     <div class="thank-you-icon">✨</div>
-    <h2 class="thank-you-text">すべての回答が完了しました！</h2>
-    <p class="thank-you-sub">ご協力ありがとうございました</p>
+    <h2 class="thank-you-text">ありがとうございました！</h2>
+    <p class="thank-you-sub">ご協力感謝します</p>
   </div>
 
+  <!-- 記録画面 -->
   <div class="screen records-screen" id="recordsScreen">
     <h2 class="form-title">📝 記録一覧</h2>
     <div class="records-list" id="recordsList"></div>
   </div>
 
+  <!-- 分析画面 -->
   <div class="screen analysis-screen" id="analysisScreen">
-    <h2 class="form-title">📊 データ分析とエクスポート</h2>
+    <h2 class="form-title">📊 データ分析</h2>
     
-    <div style="text-align: right; margin-bottom: 20px;">
-      <button onclick="exportToCSV()" style="background: #4CAF50; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px; box-shadow: 0 4px 10px rgba(76,175,80,0.3);">
-        📥 生データをCSVでダウンロード
-      </button>
-    </div>
-
     <div class="analysis-tabs">
       <div class="analysis-tab active" onclick="filterByAge('all')">全体</div>
       <div class="analysis-tab" onclick="filterByAge('10-20')">10-20代</div>
       <div class="analysis-tab" onclick="filterByAge('20-30')">20-30代</div>
       <div class="analysis-tab" onclick="filterByAge('30-40')">30-40代</div>
     </div>
-    
-    <p style="font-size: 12px; color: #666; margin-bottom: 15px; text-align: center;">
-      ※点は実際に選ばれた色を示しています。<br>
-      ※下にスクロールしてすべてのグラフをご覧いただけます。
-    </p>
 
     <div class="analysis-section">
-      <h3 class="analysis-title">【3人チーム】相関分布</h3>
-      <div class="chart-subtitle">実験1: 印象の強さと色（0:強い → 1:弱い）</div>
-      <div class="chart-row">
-        <div class="chart-wrapper"><canvas id="chart_3_exp1_hue"></canvas></div>
-        <div class="chart-wrapper"><canvas id="chart_3_exp1_saturation"></canvas></div>
-        <div class="chart-wrapper"><canvas id="chart_3_exp1_value"></canvas></div>
-      </div>
-      <div class="chart-subtitle">実験2: 配置位置と色（0:左端 → 1:右端）</div>
-      <div class="chart-row">
-        <div class="chart-wrapper"><canvas id="chart_3_exp2_hue"></canvas></div>
-        <div class="chart-wrapper"><canvas id="chart_3_exp2_saturation"></canvas></div>
-        <div class="chart-wrapper"><canvas id="chart_3_exp2_value"></canvas></div>
+      <h3 class="analysis-title">実験1：印象の強い色分析</h3>
+      <div class="chart-container" id="exp1Chart">
+        <div class="no-data">データが蓄積されるとグラフが表示されます</div>
       </div>
     </div>
 
     <div class="analysis-section">
-      <h3 class="analysis-title">【4人チーム】相関分布</h3>
-      <div class="chart-subtitle">実験1: 印象の強さと色（0:強い → 1:弱い）</div>
-      <div class="chart-row">
-        <div class="chart-wrapper"><canvas id="chart_4_exp1_hue"></canvas></div>
-        <div class="chart-wrapper"><canvas id="chart_4_exp1_saturation"></canvas></div>
-        <div class="chart-wrapper"><canvas id="chart_4_exp1_value"></canvas></div>
-      </div>
-      <div class="chart-subtitle">実験2: 配置位置と色（0:左端 → 1:右端）</div>
-      <div class="chart-row">
-        <div class="chart-wrapper"><canvas id="chart_4_exp2_hue"></canvas></div>
-        <div class="chart-wrapper"><canvas id="chart_4_exp2_saturation"></canvas></div>
-        <div class="chart-wrapper"><canvas id="chart_4_exp2_value"></canvas></div>
+      <h3 class="analysis-title">実験2：中央に来やすい色</h3>
+      <div class="chart-container" id="exp2CenterChart">
+        <div class="no-data">データが蓄積されるとグラフが表示されます</div>
       </div>
     </div>
 
     <div class="analysis-section">
-      <h3 class="analysis-title">【5人チーム】相関分布</h3>
-      <div class="chart-subtitle">実験1: 印象の強さと色（0:強い → 1:弱い）</div>
-      <div class="chart-row">
-        <div class="chart-wrapper"><canvas id="chart_5_exp1_hue"></canvas></div>
-        <div class="chart-wrapper"><canvas id="chart_5_exp1_saturation"></canvas></div>
-        <div class="chart-wrapper"><canvas id="chart_5_exp1_value"></canvas></div>
+      <h3 class="analysis-title">実験2：左に来やすい色</h3>
+      <div class="chart-container" id="exp2LeftChart">
+        <div class="no-data">データが蓄積されるとグラフが表示されます</div>
       </div>
-      <div class="chart-subtitle">実験2: 配置位置と色（0:左端 → 1:右端）</div>
-      <div class="chart-row">
-        <div class="chart-wrapper"><canvas id="chart_5_exp2_hue"></canvas></div>
-        <div class="chart-wrapper"><canvas id="chart_5_exp2_saturation"></canvas></div>
-        <div class="chart-wrapper"><canvas id="chart_5_exp2_value"></canvas></div>
+    </div>
+
+    <div class="analysis-section">
+      <h3 class="analysis-title">実験2：右に来やすい色</h3>
+      <div class="chart-container" id="exp2RightChart">
+        <div class="no-data">データが蓄積されるとグラフが表示されます</div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
+// 色分け集団のリスト
+const colorGroups = [
+  'スーパー戦隊シリーズ',
+  'プリキュアシリーズ',
+  'セーラームーン',
+  'おジャ魔女どれみ',
+  'ももいろクローバーZ',
+  'AKB48',
+  '乃木坂46',
+  '欅坂46（櫻坂46）',
+  '日向坂46',
+  'パワーレンジャー',
+  'その他のアイドルグループ',
+  '見ていない・覚えていない'
+];
+
+// グローバル変数
 let currentData = {
   age: 0,
-  series: '',
-  results: {
-    3: { exp1: [], exp2: [] },
-    4: { exp1: [], exp2: [] },
-    5: { exp1: [], exp2: [] }
+  gender: '',
+  groups: [],
+  experiment1: {
+    count: 0,
+    colors: []
+  },
+  experiment2: {
+    count: 0,
+    colors: []
   },
   timestamp: 0
 };
 
-let allData = JSON.parse(localStorage.getItem('precureResearchDataV2') || '[]');
-let currentTestCount = 3; 
+let allData = JSON.parse(localStorage.getItem('colorResearchData') || '[]');
 let selectedColorForExp1 = null;
 let selectedColorForExp2 = null;
 let currentAgeFilter = 'all';
-
-// Chart.jsの全インスタンスを保持するオブジェクト
-let chartInstances = {};
+let selectedGroups = [];
 
 // メニュー操作
 function toggleMenu() {
@@ -750,65 +803,82 @@ function startExperiment() {
   showScreen('infoScreen');
 }
 
-function goToExperiment1() {
+function goToGroupSelection() {
   const age = parseInt(document.getElementById('ageInput').value);
-  const series = document.getElementById('seriesInput').value.trim();
+  const gender = document.getElementById('genderInput').value;
   
-  if (!age || !series) {
-    alert('年齢とシリーズ名を入力してください');
+  if (!age || !gender) {
+    alert('年齢と性別を入力してください');
     return;
   }
   
   currentData.age = age;
-  currentData.series = series;
-  currentData.timestamp = Date.now();
+  currentData.gender = gender;
   
-  currentTestCount = 3;
-  startCurrentCountExp1();
+  setupGroupSelection();
+  showScreen('groupSelectionScreen');
 }
 
-function startCurrentCountExp1() {
-  document.getElementById('exp1Badge').textContent = `【${currentTestCount}人の場合】`;
-  currentData.results[currentTestCount].exp1 = new Array(currentTestCount).fill(null);
-  selectedColorForExp1 = null;
-  setupColorSelection('exp1', currentTestCount);
+function setupGroupSelection() {
+  const container = document.getElementById('groupCheckboxes');
+  container.innerHTML = '';
+  selectedGroups = [];
+  
+  colorGroups.forEach((group, index) => {
+    const item = document.createElement('div');
+    item.className = 'checkbox-item';
+    item.onclick = () => toggleGroup(index);
+    
+    item.innerHTML = `
+      <input type="checkbox" id="group${index}" onchange="toggleGroup(${index})">
+      <label class="checkbox-label" for="group${index}">${group}</label>
+    `;
+    
+    container.appendChild(item);
+  });
+  
+  updateSelectedCount();
+}
+
+function toggleGroup(index) {
+  const checkbox = document.getElementById(`group${index}`);
+  const item = checkbox.parentElement;
+  
+  if (checkbox.checked) {
+    if (selectedGroups.length >= 3) {
+      checkbox.checked = false;
+      alert('最大3つまで選択できます');
+      return;
+    }
+    selectedGroups.push(colorGroups[index]);
+    item.classList.add('selected');
+  } else {
+    selectedGroups = selectedGroups.filter(g => g !== colorGroups[index]);
+    item.classList.remove('selected');
+  }
+  
+  updateSelectedCount();
+}
+
+function updateSelectedCount() {
+  document.getElementById('selectedCount').textContent = `選択数: ${selectedGroups.length} / 3`;
+  document.getElementById('groupNextButton').disabled = selectedGroups.length === 0;
+}
+
+function goToExperiment1() {
+  currentData.groups = selectedGroups;
+  currentData.timestamp = Date.now();
+  showScreen('exp1CountScreen');
+}
+
+// 実験1
+function selectCount1(count) {
+  currentData.experiment1.count = count;
+  currentData.experiment1.colors = [];
+  setupColorSelection('exp1', count);
   showScreen('exp1ColorScreen');
 }
 
-function completeExperiment1() {
-  document.getElementById('complete1').style.display = 'none';
-  document.getElementById('exp2Badge').textContent = `【${currentTestCount}人の場合】`;
-  
-  currentData.results[currentTestCount].exp2 = new Array(currentTestCount).fill(null);
-  selectedColorForExp2 = null;
-  setupColorSelection('exp2', currentTestCount);
-  showScreen('exp2ColorScreen');
-}
-
-function completeExperiment2() {
-  document.getElementById('complete2').style.display = 'none';
-
-  if (currentTestCount === 3) {
-    alert('続いて、【4人の場合】の実験に進みます。');
-    currentTestCount = 4;
-    startCurrentCountExp1();
-  } else if (currentTestCount === 4) {
-    alert('最後に、【5人の場合】の実験に進みます。');
-    currentTestCount = 5;
-    startCurrentCountExp1();
-  } else {
-    allData.push(JSON.parse(JSON.stringify(currentData)));
-    localStorage.setItem('precureResearchDataV2', JSON.stringify(allData));
-    
-    showScreen('thankYouScreen');
-    
-    setTimeout(() => {
-      goToHome();
-    }, 3000);
-  }
-}
-
-// ★2Dカラーピッカー（明度対応）の処理
 function setupColorSelection(experiment, count) {
   const containerId = experiment === 'exp1' ? 'exp1Circles' : 'exp2Circles';
   const gradientId = experiment === 'exp1' ? 'gradientBar1' : 'gradientBar2';
@@ -817,6 +887,7 @@ function setupColorSelection(experiment, count) {
   
   container.innerHTML = '';
   
+  // 丸を作成
   for (let i = 0; i < count; i++) {
     const circle = document.createElement('div');
     circle.className = 'circle';
@@ -826,50 +897,40 @@ function setupColorSelection(experiment, count) {
     circle.addEventListener('click', () => {
       const selectedColor = experiment === 'exp1' ? selectedColorForExp1 : selectedColorForExp2;
       if (!selectedColor) {
-        alert('先に下のエリアから色を選んでください');
+        alert('先に下のバーから色を選んでください');
         return;
       }
       
-      const currentColors = currentData.results[count][experiment];
+      const currentColors = experiment === 'exp1' ? currentData.experiment1.colors : currentData.experiment2.colors;
       
-      if (currentColors.some(c => c && c.hex === selectedColor.hex && currentColors.indexOf(c) !== i)) {
+      // 重複チェック
+      if (currentColors.some(c => c && c.hex === selectedColor.hex && c.index !== i)) {
         alert('同じ色は使えません！');
         return;
       }
       
+      // 色を設定
       circle.style.background = selectedColor.hex;
       circle.classList.add('filled');
       circle.textContent = '';
       
       currentColors[i] = selectedColor;
+      
+      // 完了ボタン表示チェック
       checkCompletion(experiment, count);
     });
     
     container.appendChild(circle);
   }
-  
-  const displayBox = document.getElementById(experiment === 'exp1' ? 'selectedColor1' : 'selectedColor2');
-  const infoText = document.getElementById(experiment === 'exp1' ? 'colorInfo1' : 'colorInfo2');
-  displayBox.style.background = 'transparent';
-  infoText.textContent = '色を選択してください';
-  
-  // ★ ピッカーのクリックイベント修正部分
+
+  // グラデーションバーのクリックイベント
   gradientBar.onclick = (e) => {
     const rect = gradientBar.getBoundingClientRect();
     const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top; // Y座標を取得
-
-    // x, yの位置を 0.0 〜 1.0 に変換
-    const percentageX = Math.max(0, Math.min(1, x / rect.width));
-    const percentageY = Math.max(0, Math.min(1, y / rect.height));
+    const percentage = x / rect.width;
+    const hue = Math.round(percentage * 360);
     
-    // X軸で色相(Hue)を決定
-    const hue = Math.round(percentageX * 360);
-    // Y軸で明度(Lightness)を決定 (上が白100、下が黒0)
-    const lightness = Math.round((1 - percentageY) * 100);
-    
-    // HSLからHexに変換
-    const hex = hslToHex(hue, 100, lightness);
+    const hex = hslToHex(hue, 100, 50);
     const rgb = hexToRgb(hex);
     const hsv = rgbToHsv(rgb.r, rgb.g, rgb.b);
     
@@ -877,29 +938,58 @@ function setupColorSelection(experiment, count) {
       hex: hex,
       hue: hue,
       saturation: hsv.s,
-      value: hsv.v, // V = 明度
+      value: hsv.v,
       rgb: rgb
     };
     
     if (experiment === 'exp1') {
       selectedColorForExp1 = colorData;
       document.getElementById('selectedColor1').style.background = hex;
-      document.getElementById('colorInfo1').textContent = `H(色相):${hue}° S(彩度):${Math.round(hsv.s)}% V(明度):${Math.round(hsv.v)}%`;
+      document.getElementById('colorInfo1').textContent = `H:${hue}° S:${Math.round(hsv.s)}% V:${Math.round(hsv.v)}%`;
     } else {
       selectedColorForExp2 = colorData;
       document.getElementById('selectedColor2').style.background = hex;
-      document.getElementById('colorInfo2').textContent = `H(色相):${hue}° S(彩度):${Math.round(hsv.s)}% V(明度):${Math.round(hsv.v)}%`;
+      document.getElementById('colorInfo2').textContent = `H:${hue}° S:${Math.round(hsv.s)}% V:${Math.round(hsv.v)}%`;
     }
   };
 }
 
 function checkCompletion(experiment, count) {
-  const colors = currentData.results[count][experiment];
+  const colors = experiment === 'exp1' ? currentData.experiment1.colors : currentData.experiment2.colors;
   const buttonId = experiment === 'exp1' ? 'complete1' : 'complete2';
-  const filled = colors.filter(c => c !== null).length;
+  
+  const filled = colors.filter(c => c !== undefined).length;
+  
   if (filled === count) {
     document.getElementById(buttonId).style.display = 'block';
   }
+}
+
+function completeExperiment1() {
+  showScreen('exp2CountScreen');
+  document.getElementById('complete1').style.display = 'none';
+}
+
+// 実験2
+function selectCount2(count) {
+  currentData.experiment2.count = count;
+  currentData.experiment2.colors = [];
+  setupColorSelection('exp2', count);
+  showScreen('exp2ColorScreen');
+}
+
+function completeExperiment2() {
+  // データ保存
+  allData.push(JSON.parse(JSON.stringify(currentData)));
+  localStorage.setItem('colorResearchData', JSON.stringify(allData));
+  
+  document.getElementById('complete2').style.display = 'none';
+  showScreen('thankYouScreen');
+  
+  // 3秒後にホームに戻る
+  setTimeout(() => {
+    goToHome();
+  }, 3000);
 }
 
 // 記録表示
@@ -912,38 +1002,30 @@ function displayRecords() {
     return;
   }
   
-  allData.slice().reverse().forEach((data) => {
+  allData.slice().reverse().forEach((data, index) => {
     const item = document.createElement('div');
     item.className = 'record-item';
+    
     const date = new Date(data.timestamp);
     
-    let html = `
+    item.innerHTML = `
       <div class="record-header">
-        <span>年齢: ${data.age}歳</span>
+        <span>${data.age}歳・${data.gender}</span>
         <span>${date.toLocaleDateString()}</span>
       </div>
-      <div style="font-size:14px;color:#666;margin-bottom:10px;">
-        ${data.series}
+      <div class="record-groups">
+        馴染みのあった集団：${data.groups.join('、')}
+      </div>
+      <div class="record-experiment-label">実験1: 印象の強い色</div>
+      <div class="record-colors">
+        ${data.experiment1.colors.map(c => `<div class="record-color" style="background:${c.hex}"></div>`).join('')}
+      </div>
+      <div class="record-experiment-label">実験2: 横並び配置</div>
+      <div class="record-colors">
+        ${data.experiment2.colors.map(c => `<div class="record-color" style="background:${c.hex}"></div>`).join('')}
       </div>
     `;
-
-    [3, 4, 5].forEach(count => {
-      if (!data.results[count] || !data.results[count].exp1) return;
-      
-      html += `
-        <div class="record-experiment-label">【${count}人の場合】</div>
-        <div class="record-sub-label">実験1: 印象の強い順</div>
-        <div class="record-colors">
-          ${data.results[count].exp1.map(c => c ? `<div class="record-color" style="background:${c.hex}"></div>` : '').join('')}
-        </div>
-        <div class="record-sub-label">実験2: 横並び配置</div>
-        <div class="record-colors">
-          ${data.results[count].exp2.map(c => c ? `<div class="record-color" style="background:${c.hex}"></div>` : '').join('')}
-        </div>
-      `;
-    });
     
-    item.innerHTML = html;
     list.appendChild(item);
   });
 }
@@ -964,174 +1046,107 @@ function displayAnalysis() {
     filteredData = allData.filter(d => d.age >= min && d.age < max);
   }
   
-  const counts = [3, 4, 5];
-  const exps = ['exp1', 'exp2'];
-  const props = ['hue', 'saturation', 'value'];
-  
-  counts.forEach(c => {
-    exps.forEach(e => {
-      props.forEach(p => {
-        const canvasId = `chart_${c}_${e}_${p}`;
-        drawScatterChart(filteredData, c, e, p, canvasId);
-      });
+  if (filteredData.length === 0) {
+    document.querySelectorAll('.chart-container').forEach(chart => {
+      chart.innerHTML = '<div class="no-data">データがありません</div>';
     });
-  });
-}
-
-// グラフ描画
-function drawScatterChart(data, count, expType, colorProp, canvasId) {
-  const canvas = document.getElementById(canvasId);
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  
-  if (chartInstances[canvasId]) {
-    chartInstances[canvasId].destroy();
-  }
-
-  const scatterPoints = [];
-  const pointColors = [];
-
-  data.forEach(d => {
-    if(!d.results[count] || !d.results[count][expType]) return;
-    
-    d.results[count][expType].forEach((c, index) => {
-      if(!c) return;
-      // 0〜1に正規化
-      const xPos = count > 1 ? index / (count - 1) : 0.5;
-      
-      let yVal = 0;
-      if (colorProp === 'hue') yVal = c.hue;
-      if (colorProp === 'saturation') yVal = c.saturation;
-      if (colorProp === 'value') yVal = c.value;
-      
-      scatterPoints.push({ x: xPos, y: yVal });
-      pointColors.push(c.hex);
-    });
-  });
-
-  let xTitle = expType === 'exp1' ? '印象 (0:強 ←→ 1:弱)' : '位置 (0:左 ←→ 1:右)';
-  let yTitle = '';
-  let yMax = 100;
-  let yStep = 20;
-  
-  if (colorProp === 'hue') {
-    yTitle = '色相 (Hue 0-360)';
-    yMax = 360;
-    yStep = 60;
-  } else if (colorProp === 'saturation') {
-    yTitle = '彩度 (Saturation 0-100%)';
-  } else if (colorProp === 'value') {
-    yTitle = '明度 (Value 0-100%)';
-  }
-
-  chartInstances[canvasId] = new Chart(ctx, {
-    type: 'scatter',
-    data: {
-      datasets: [{
-        data: scatterPoints,
-        backgroundColor: pointColors,
-        borderColor: '#999',
-        borderWidth: 1,
-        pointRadius: 6,
-        pointHoverRadius: 9
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        x: {
-          title: { display: true, text: xTitle, font: {size: 11} },
-          min: -0.1,
-          max: 1.1,
-          ticks: {
-            callback: function(value) {
-              if (expType === 'exp1') {
-                if(value === 0) return '強(0)';
-                if(value === 1) return '弱(1)';
-              } else {
-                if(value === 0) return '左(0)';
-                if(value === 0.5) return '中(0.5)';
-                if(value === 1) return '右(1)';
-              }
-              return value.toFixed(1);
-            },
-            font: {size: 10}
-          }
-        },
-        y: {
-          title: { display: true, text: yTitle, font: {size: 11} },
-          min: 0,
-          max: yMax,
-          ticks: { stepSize: yStep, font: {size: 10} }
-        }
-      },
-      plugins: {
-        tooltip: {
-          callbacks: {
-            label: function(context) {
-              return `${xTitle.split(' ')[0]}: ${context.parsed.x.toFixed(2)}, ${yTitle.split(' ')[0]}: ${context.parsed.y}`;
-            }
-          }
-        },
-        legend: { display: false }
-      }
-    }
-  });
-}
-
-function exportToCSV() {
-  if (allData.length === 0) {
-    alert("エクスポートするデータがありません。");
     return;
   }
-
-  let csvContent = "\uFEFF";
-  csvContent += "回答日時,年齢,視聴シリーズ," + 
-                "[3人]実験1_印象(H:S:V),[3人]実験2_配置(位置-H:S:V)," +
-                "[4人]実験1_印象(H:S:V),[4人]実験2_配置(位置-H:S:V)," +
-                "[5人]実験1_印象(H:S:V),[5人]実験2_配置(位置-H:S:V)\n";
-
-  allData.forEach(d => {
-    const date = new Date(d.timestamp).toLocaleString();
-    const age = d.age;
-    const series = `"${d.series}"`; 
-    
-    let row = `${date},${age},${series}`;
-
-    [3, 4, 5].forEach(count => {
-      if (d.results[count] && d.results[count].exp1 && d.results[count].exp2) {
-        
-        const exp1Colors = `"${d.results[count].exp1.map(c => {
-          if(!c) return '';
-          return `${c.hue}:${Math.round(c.saturation)}:${Math.round(c.value)}`;
-        }).join(',')}"`;
-        
-        const exp2Details = `"${d.results[count].exp2.map((c, i) => {
-          if(!c) return '';
-          const pos = count > 1 ? (i / (count - 1)).toFixed(2) : 0.5;
-          return `${pos}-${c.hue}:${Math.round(c.saturation)}:${Math.round(c.value)}`;
-        }).join(',')}"`;
-        
-        row += `,${exp1Colors},${exp2Details}`;
-      } else {
-        row += `,"",""`;
-      }
-    });
-
-    csvContent += row + "\n";
-  });
-
-  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.setAttribute("href", url);
-  link.setAttribute("download", "precure_color_research_hsv_data.csv");
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  
+  // 実験1分析
+  analyzeExperiment1(filteredData);
+  
+  // 実験2分析
+  analyzeExperiment2(filteredData);
 }
 
+function analyzeExperiment1(data) {
+  const chart = document.getElementById('exp1Chart');
+  
+  const hueDistribution = {};
+  data.forEach(d => {
+    d.experiment1.colors.forEach(c => {
+      const hueRange = Math.floor(c.hue / 30) * 30;
+      hueDistribution[hueRange] = (hueDistribution[hueRange] || 0) + 1;
+    });
+  });
+  
+  let html = '<div style="padding:20px;">';
+  Object.entries(hueDistribution).sort((a, b) => b[1] - a[1]).forEach(([hue, count]) => {
+    const color = hslToHex(parseInt(hue), 100, 50);
+    const percentage = (count / data.length / 5 * 100).toFixed(1);
+    html += `
+      <div style="margin-bottom:10px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:30px;height:30px;background:${color};border-radius:50%;"></div>
+          <div style="flex:1;">
+            <div style="background:${color};height:20px;width:${percentage}%;border-radius:10px;"></div>
+          </div>
+          <div style="font-size:12px;color:#666;">${count}回</div>
+        </div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  
+  chart.innerHTML = html;
+}
+
+function analyzeExperiment2(data) {
+  const positions = { center: {}, left: {}, right: {} };
+  
+  data.forEach(d => {
+    d.experiment2.colors.forEach((c, index) => {
+      const total = d.experiment2.count;
+      const middle = Math.floor(total / 2);
+      
+      const hueRange = Math.floor(c.hue / 30) * 30;
+      
+      if (index === middle) {
+        positions.center[hueRange] = (positions.center[hueRange] || 0) + 1;
+      } else if (index < middle) {
+        positions.left[hueRange] = (positions.left[hueRange] || 0) + 1;
+      } else {
+        positions.right[hueRange] = (positions.right[hueRange] || 0) + 1;
+      }
+    });
+  });
+  
+  displayPositionChart('exp2CenterChart', positions.center, data.length);
+  displayPositionChart('exp2LeftChart', positions.left, data.length);
+  displayPositionChart('exp2RightChart', positions.right, data.length);
+}
+
+function displayPositionChart(chartId, distribution, total) {
+  const chart = document.getElementById(chartId);
+  
+  if (Object.keys(distribution).length === 0) {
+    chart.innerHTML = '<div class="no-data">データがありません</div>';
+    return;
+  }
+  
+  let html = '<div style="padding:20px;">';
+  Object.entries(distribution).sort((a, b) => b[1] - a[1]).slice(0, 10).forEach(([hue, count]) => {
+    const color = hslToHex(parseInt(hue), 100, 50);
+    const percentage = (count / total * 100).toFixed(1);
+    html += `
+      <div style="margin-bottom:10px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:30px;height:30px;background:${color};border-radius:50%;"></div>
+          <div style="flex:1;">
+            <div style="background:${color};height:20px;width:${percentage}%;border-radius:10px;"></div>
+          </div>
+          <div style="font-size:12px;color:#666;">${count}回</div>
+        </div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  
+  chart.innerHTML = html;
+}
+
+// ユーティリティ関数
 function hslToHex(h, s, l) {
   s /= 100;
   l /= 100;
@@ -1180,27 +1195,27 @@ function rgbToHsv(r, g, b) {
 function resetData() {
   currentData = {
     age: 0,
-    series: '',
-    results: {
-      3: { exp1: [], exp2: [] },
-      4: { exp1: [], exp2: [] },
-      5: { exp1: [], exp2: [] }
-    },
+    gender: '',
+    groups: [],
+    experiment1: { count: 0, colors: [] },
+    experiment2: { count: 0, colors: [] },
     timestamp: 0
   };
-  currentTestCount = 3;
   selectedColorForExp1 = null;
   selectedColorForExp2 = null;
+  selectedGroups = [];
   document.getElementById('ageInput').value = '';
-  document.getElementById('seriesInput').value = '';
+  document.getElementById('genderInput').value = '';
 }
 
+// ページ読み込み時
 window.addEventListener('load', () => {
-  allData = JSON.parse(localStorage.getItem('precureResearchDataV2') || '[]');
+  allData = JSON.parse(localStorage.getItem('colorResearchData') || '[]');
 });
 
+// リアルタイム更新
 setInterval(() => {
-  const newData = JSON.parse(localStorage.getItem('precureResearchDataV2') || '[]');
+  const newData = JSON.parse(localStorage.getItem('colorResearchData') || '[]');
   if (newData.length !== allData.length) {
     allData = newData;
     const currentScreen = document.querySelector('.screen.active');
